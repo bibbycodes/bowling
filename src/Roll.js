@@ -12,7 +12,3 @@ Roll.prototype.checkStrike = function() {
     this.isStrike = true
   }
 }
-
-roll = new Roll(1, 10)
-
-console.log(roll.isStrike)
