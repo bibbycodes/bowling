@@ -18,4 +18,10 @@ describe('Roll', function(){
   it('has a minimum score of 0', function() {
     expect(roll.minScore).toEqual(0)
   })
+
+  it('is a strike if the score is 10', function() {
+    strike = new Roll(2,10)
+    expect(roll.isStrike).toEqual(false)
+    expect(strike.isStrike).toEqual(true)
+  })
 })
