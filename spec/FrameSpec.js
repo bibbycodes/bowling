@@ -1,4 +1,5 @@
 describe('Frame', function() {
+
   beforeEach(function() {
     frame = new Frame(1)
     frame10 = new Frame(10)
@@ -15,6 +16,10 @@ describe('Frame', function() {
     expect(frame.rolls).toEqual([])
   })
 
+  it('has an initial score of 0',function(){
+    expect(frame.baseScore).toEqual(0)
+  })
+
   it('can add rolls', function() {
     frame.addRoll(roll1)
     frame.addRoll(roll2)
@@ -25,8 +30,14 @@ describe('Frame', function() {
     expect(frame10.isTenth()).toEqual(true)
   })
 
-  it('returns false if its the tenth frame', function() {
+  it('returns false if its not the tenth frame', function() {
     expect(frame.isTenth()).toEqual(false)
+  })
+
+  it('detects when there is a spare', function() {
+    frame.addRoll(roll1)
+    frame.addRoll(roll2)
+    expect(frame.isSpare()).toEqual(true)
   })
 
   it('checks if the first roll was a strike', function() {
