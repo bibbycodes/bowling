@@ -9,7 +9,7 @@ function Frame (number) {
 }
 
 Frame.prototype.hasStrike = function() {
-  return  (this.rolls[0] && this.rolls[0].isStrike)
+  return (this.rolls[0] && this.rolls[0].isStrike)
 }
 
 Frame.prototype.isTenth = function() {
@@ -23,7 +23,6 @@ Frame.prototype.isOver = function() {
   
   if (this.isTenth()) {
     if ((this.hasStrike()) || (this.isSpare())) {
-      console.log("strike")
       return this.rolls.length == 3
       }
 
@@ -31,6 +30,7 @@ Frame.prototype.isOver = function() {
       return true
       }
   } else {
+
     if (this.rolls.length == 2) {
       return true
     }
@@ -42,6 +42,7 @@ Frame.prototype.isOver = function() {
 Frame.prototype.addRoll = function(roll) {
   if (!this.isOver()) {
     this.rolls.push(roll)
+    this.baseScore = this.calcBaseScore()
   }
 }
 
@@ -58,3 +59,19 @@ Frame.prototype.isSpare = function()  {
   }
 }
 
+Frame.prototype.calcBaseScore = function() {
+  score = 0
+  this.rolls.forEach(function(roll) {
+    score += roll.score
+  })
+  return score
+}
+
+Frame.prototype.isValidFrame = function() {
+  if (this.isTenth()) {
+    console.log("tenth")
+    return this.calcBaseScore() <= 30
+  } else {
+    return this.calcBaseScore() <= 10
+  }
+}

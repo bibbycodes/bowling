@@ -6,6 +6,7 @@ describe('Frame', function() {
     roll1 = new Roll(1, 4)
     roll2 = new Roll(2, 6)
     roll3 = new Roll(3, 3)
+    roll4 = new Roll(4, 7)
     strike = new Roll(1, 10)
   })
 
@@ -111,17 +112,9 @@ describe('Frame', function() {
 
     it('has a maximum of two rolls if the frame number is 10 and there is no strike or spare', function() {
       frame10.addRoll(roll3)
-      console.log(frame10.isOver())
-      console.log(frame10.rolls)
       frame10.addRoll(roll1)
-      console.log(frame10.isOver())
-      console.log(frame10.rolls)
       frame10.addRoll(roll2)
-      console.log(frame10.isOver())
-      console.log(frame10.rolls)
       frame10.addRoll(roll2)
-      console.log(frame10.isOver())
-      console.log(frame10.rolls)
       expect(frame10.rolls.length).toEqual(2)
     })
 
@@ -138,6 +131,27 @@ describe('Frame', function() {
       frame2.addRoll(roll1)
       expect(frame2.rolls).toEqual([strike])
     })
+  })
+
+  describe("#checkScore", function() {
+
+    it("calculates the base score", function() {
+      frame.addRoll(roll1)
+      frame.addRoll(roll3)
+      expect(frame.calcBaseScore()).toEqual(7)
+    })
+    it("doesnt allow for normal frames to add up to more than 10 points before the bonus is applied", function() {
+      frame.addRoll(roll2)
+      frame.addRoll(roll4)
+      expect(frame.isValidFrame()).toEqual(false)
+    }) 
+
+    it("doesnt allow for the tenth frame to have a score of more than 30", function() {
+      frame10.addRoll(strike)
+      frame10.addRoll(strike)
+      frame10.addRoll(strike)
+      expect(frame.isValidFrame()).toEqual(true)
+    }) 
   })
 
 })
