@@ -9,35 +9,33 @@ function Frame (number) {
 }
 
 Frame.prototype.hasStrike = function() {
-  if (this.rolls[0] && this.rolls[0].isStrike) {
-    return true
-  } else {
-    return false
-  }
+  return  (this.rolls[0] && this.rolls[0].isStrike)
 }
 
 Frame.prototype.isTenth = function() {
-  if(this.number == 10) {
-    return true
-  } else {
-    return false
-  }
+  return this.number == 10
 }
 
 Frame.prototype.isOver = function() {
-  if (this.hasStrike()) {
+  if (this.hasStrike() && !this.isTenth()) {
     return true
   }
-
+  
   if (this.isTenth()) {
-    if ((this.hasStrike() && this.rolls.length == 3) || (this.isSpare() && this.rolls.length == 3)) {
+    if ((this.hasStrike()) || (this.isSpare())) {
+      console.log("strike")
+      return this.rolls.length == 3
+      }
+
+    if (this.rolls.length == 2) {
       return true
       }
-    } else {
+  } else {
     if (this.rolls.length == 2) {
       return true
     }
   }
+
   return false
 }
 
@@ -59,3 +57,4 @@ Frame.prototype.isSpare = function()  {
     return false
   }
 }
+
