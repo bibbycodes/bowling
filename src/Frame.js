@@ -1,7 +1,3 @@
-// NB you only get three rolls in the 10th frame 
-// if you roll a strike in the first roll
-// or a spare on the second
-
 function Frame (number) {
   this.number = number
   this.rolls = []
