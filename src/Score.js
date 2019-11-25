@@ -19,13 +19,15 @@ Score.prototype.addRollsFromFrame = function(frame) {
 }
 
 Score.prototype.calculateBaseScore = function(frames = this.allFrames) {
-  for (i = 0; i < this.allFrames.length; i++) {
-    this.baseScore += this.allFrames[i].baseScore
+  this.baseScore = 0
+  for (i = 0; i < frames.length; i++) {
+    this.baseScore += frames[i].baseScore
   }
   return this.baseScore
 }
 
 Score.prototype.calculateStrikeBonus = function(rolls = this.allRolls) {
+  this.strikeBonus = 0
   for (i = 0; i < rolls.length; i++) {
     roll = rolls[i]
     nextRoll = rolls[i + 1]
@@ -44,13 +46,13 @@ Score.prototype.calculateStrikeBonus = function(rolls = this.allRolls) {
 }
 
 Score.prototype.calculateSpareBonus = function(frames = this.allFrames) {
+  this.spareBonus = 0
   bonus = 0
-  for (i = 0; i < this.allFrames.length; i ++) {
-    frame = this.allFrames[i]
-    if (this.allFrames[i].isSpare()) {
+  for (i = 0; i < frames.length; i ++) {
+    frame = frames[i]
+    if (frames[i].isSpare()) {
       if (frame.number != 10) {
-        nextFrame = this.allFrames[i + 1]
-        console.log("SPARE!")
+        nextFrame = frames[i + 1]
         bonus += nextFrame.rolls[0].score
       } else {
         bonus += frame.rolls[2].score
@@ -59,4 +61,13 @@ Score.prototype.calculateSpareBonus = function(frames = this.allFrames) {
   }
   this.spareBonus = bonus
   return this.spareBonus
+}
+
+Score.prototype.calculateTotalScore = function(frames = this.allFrames) {
+  baseScore = this.calculateBaseScore(frames)
+  strikeBonus = this.calculateStrikeBonus(frames.allRolls)
+  spareBonus = this.calculateSpareBonus(frames)
+  totalScore = (baseScore + strikeBonus + spareBonus)
+  this.totalScore = totalScore
+  return this.totalScore
 }

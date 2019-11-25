@@ -68,6 +68,7 @@ Frame.prototype.calcBaseScore = function() {
   this.rolls.forEach(function(roll) {
     score += roll.score
   })
+  this.baseScore = score
   return score
 }
 
