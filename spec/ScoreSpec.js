@@ -24,7 +24,7 @@ describe('Score', function() {
     })
   })
 
-  describe("calculating the scorre", function() {
+  describe("calculating the score", function() {
 
     beforeEach(function() {
       scores = [[8,1], [0,9], [2,8], [0,10], [6,3], [7,0], [5,2], [0,10], [0,6], [2,8,10]]
@@ -57,6 +57,11 @@ describe('Score', function() {
     it("calculates the strike bonus", function() {
       testScore.calculateStrikeBonus()
       expect(testScore.strikeBonus).toEqual(15)
+    })
+
+    it("calculates the spare bonus", function() {
+      testScore.calculateSpareBonus()
+      expect(testScore.spareBonus).toEqual(10)
     })
   })
 })

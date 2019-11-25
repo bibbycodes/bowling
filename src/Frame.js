@@ -5,7 +5,15 @@ function Frame (number) {
 }
 
 Frame.prototype.hasStrike = function() {
-  return (this.rolls[0] && this.rolls[0].isStrike)
+  if ((this.rolls[0] && this.rolls[0].isStrike)) {
+    return true
+  }
+
+  if (this.rolls[1] && this.rolls[1].isStrike) {
+    return true
+  }
+
+  return false
 }
 
 Frame.prototype.isTenth = function() {
@@ -44,15 +52,15 @@ Frame.prototype.addRoll = function(roll) {
 
 Frame.prototype.isSpare = function()  {
   total = 0
-  if (this.rolls.length >= 2) {
-    total += (this.rolls[0].score + this.rolls[1].score)
-  }
 
-  if (total == 10) {
-    return true
-  } else {
+  if (this.hasStrike()) {
     return false
   }
+
+  if ((this.rolls.length >= 2)) {
+    total += (this.rolls[0].score + this.rolls[1].score)
+  }
+  return total == 10
 }
 
 Frame.prototype.calcBaseScore = function() {
